@@ -60,5 +60,21 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "ProjetoMarket.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "ProjetoMarket.Models.Login",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

@@ -11,8 +11,8 @@ using ProjetoMarket.Data;
 namespace ProjetoMarket.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250531155538_Initial")]
-    partial class Initial
+    [Migration("20250601004555_AddGroupinUser")]
+    partial class AddGroupinUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,20 @@ namespace ProjetoMarket.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ProjetoMarket.Models.Login", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Email");
+
+                    b.ToTable("Login");
+                });
 
             modelBuilder.Entity("ProjetoMarket.Models.User", b =>
                 {
@@ -35,6 +49,9 @@ namespace ProjetoMarket.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Group")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

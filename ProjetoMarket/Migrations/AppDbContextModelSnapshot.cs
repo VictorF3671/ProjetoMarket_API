@@ -21,6 +21,20 @@ namespace ProjetoMarket.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjetoMarket.Models.Login", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Email");
+
+                    b.ToTable("Login");
+                });
+
             modelBuilder.Entity("ProjetoMarket.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +46,9 @@ namespace ProjetoMarket.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Group")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

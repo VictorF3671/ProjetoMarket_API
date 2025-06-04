@@ -257,9 +257,14 @@ C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\refint\
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\ProjetoMarket.pdb
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\ProjetoMarket.genruntimeconfig.cache
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\ref\ProjetoMarket.dll
-C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.Bcl.TimeProvider.dll
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\ProjetoMarket.sourcelink.json
+C:\Users\victo\source\repos\ProjetoMarket\ProjetoMarket\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
