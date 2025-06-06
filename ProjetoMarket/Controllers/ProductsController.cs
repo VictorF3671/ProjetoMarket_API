@@ -22,6 +22,16 @@ namespace ProjetoMarket.Controllers
             _context = context;
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct([FromBody] Products products)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            _context.Products.Add(products);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Details), new { id = products.Id }, products);
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
