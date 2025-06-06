@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjetoMarket.Data;
+using ProjetoMarket.Interfaces;
 using ProjetoMarket.Models;
 using System;
 using System.Collections.Generic;
@@ -21,51 +22,46 @@ namespace ProjetoMarket.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-        public LoginController(AppDbContext context, IConfiguration configuration)
+        public LoginController(AppDbContext context, IConfiguration configuration, IUserService userService)
         {
             _context = context;
+            _userService = userService;
             _configuration = configuration;
+
         }
         [HttpPost]
         public IActionResult Login([FromBody] Login login)
         {
-            var user = _context.Market
-                .FirstOrDefault(u => u.Email == login.Email && u.Password == login.Password);
+            var user = _context.Users
+                .FirstOrDefault(u => u.Email == login.Email);
 
-            if (user == null)
-                return Unauthorized("Usuário ou senha inválidos");
+            if (user == null) {
+                return Unauthorized("Usuário Não Encontrado");
+            }
+            if (_userService.VerifyPassword(login.Password, user.HashPassword)) {
+                return Unauthorized("Senha Inválida");
+            }
 
-            var token = GenerateJwtToken(user); 
+
+            var token = _userService.GenerateJwtToken(user);
             string roleString = user.Group switch
             {
-                1 => "ROLE_USER",
-                2 => "ROLE_ADMIN",
+                1 => "ROLE_SELLER",
+                2 => "ROLE_ADMIM",
                 _ => "ROLE_UNKNOWN"
             };
-            return Ok(new { token, group = roleString });
-        }
-
-        private string GenerateJwtToken(User user) 
-        {
-            var claims = new[]
+            LoginDto loginDto = new LoginDto
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                Token = token,
+                Email = user.Email,
+                Name = user.Name,
+                group = roleString
             };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key.Secret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
-                claims: claims,
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return Ok(loginDto);
         }
-    }
 
+
+    }
 }

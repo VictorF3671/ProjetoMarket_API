@@ -27,7 +27,7 @@ namespace ProjetoMarket.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _context.Market.Add(user);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
@@ -35,13 +35,13 @@ namespace ProjetoMarket.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Market.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
-            var user = await _context.Market.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
                 return NotFound();
             return user;
