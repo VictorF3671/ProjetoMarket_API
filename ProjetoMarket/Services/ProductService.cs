@@ -14,17 +14,11 @@ namespace ProjetoMarket.Services
         {
             _context = context;
         }
-        public async Task<CreateProductDto> CreateProduct(CreateProductDto createProductDto, ClaimsPrincipal userClaims)
+        public async Task<CreateProductDto> CreateProduct(CreateProductDto createProductDto)
         {
             if (createProductDto == null)
                 throw new ArgumentNullException(nameof(createProductDto), "Produto não pode ser nulo.");
 
-            // Pega o Id do usuário logado a partir dos claims
-            var userIdClaim = userClaims.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            if (userIdClaim == null)
-                throw new InvalidOperationException("Usuário não autenticado ou token inválido.");
-
-            var userId = int.Parse(userIdClaim.Value);
 
             var product = new Products
             {
@@ -32,8 +26,7 @@ namespace ProjetoMarket.Services
                 Description = createProductDto.Description,
                 Price = createProductDto.Price,
                 Stock = createProductDto.Stock,
-                CreatedAt = DateTime.Now,
-                IdUser = userId
+                CreatedAt = DateTime.UtcNow,
             };
 
             _context.Products.Add(product);
@@ -44,26 +37,6 @@ namespace ProjetoMarket.Services
         public async Task<IEnumerable<object>> GetAllProduct()
         {
             var products = await _context.Products
-            .Include(p => p.User) // Faz o join automaticamente
-            .Select(p => new ProductDto
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price,
-                Stock = p.Stock,
-                CreatedAt = p.CreatedAt,
-                CreatedBy = p.User.Name // Nome do usuário dono
-            })
-             .ToListAsync();
-
-            return products;
-
-        }
-        public async Task<object?> GetProductById(int id)
-        {
-            var product = await _context.Products
-                .Include(p => p.User) // Faz o join automaticamente
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,
@@ -71,8 +44,23 @@ namespace ProjetoMarket.Services
                     Description = p.Description,
                     Price = p.Price,
                     Stock = p.Stock,
-                    CreatedAt = p.CreatedAt,
-                    CreatedBy = p.User.Name // Nome do usuário dono
+                    CreatedAt = p.CreatedAt
+                })
+                .ToListAsync();
+
+            return products;
+        }
+        public async Task<object?> GetProductById(int id)
+        {
+            var product = await _context.Products
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    CreatedAt = p.CreatedAt
                 })
                 .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -87,5 +75,7 @@ namespace ProjetoMarket.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+
     }
     }

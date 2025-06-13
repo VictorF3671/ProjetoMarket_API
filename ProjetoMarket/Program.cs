@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ProjetoMarket.Data;
+using ProjetoMarket.Interfaces;
+using ProjetoMarket.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,7 +47,9 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
-
+builder.Services.AddControllers();
+builder.Services.AddScoped<IProductsService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 app.UseCors();

@@ -1,10 +1,9 @@
 ﻿namespace ProjetoMarket.Services
     
 {
-    using Microsoft.CodeAnalysis.Scripting;
+    
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
-    using Org.BouncyCastle.Crypto.Generators;
     using ProjetoMarket.Data;
     using ProjetoMarket.Interfaces;
     using ProjetoMarket.Models;

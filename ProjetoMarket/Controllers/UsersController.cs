@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoMarket.Data;
+using ProjetoMarket.Interfaces;
 using ProjetoMarket.Models;
 
 namespace ProjetoMarket.Controllers
@@ -15,27 +16,49 @@ namespace ProjetoMarket.Controllers
     public class UsersController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IUserService _userService;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, IUserService userService )
         {
             _context = context;
+            _userService = userService;
+        
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDto userDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var user = new User
+            {
+                Name = userDto.Name,
+                HashPassword = _userService.GenerateHashPassword(userDto.Password),
+                Email = userDto.Email,
+                PhoneNumber = userDto.PhoneNumber,
+                Group = userDto.Group,
+            };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<object>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            
+            var usuarios = await _context.Users
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber,
+                    Group = u.Group,
+                }).ToListAsync();
+
+            return usuarios;
         }
 
         [HttpGet("{id}")]

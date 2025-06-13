@@ -40,7 +40,7 @@ namespace ProjetoMarket.Controllers
             if (user == null) {
                 return Unauthorized("Usuário Não Encontrado");
             }
-            if (_userService.VerifyPassword(login.Password, user.HashPassword)) {
+            if (!_userService.VerifyPassword(login.Password, user.HashPassword)) {
                 return Unauthorized("Senha Inválida");
             }
 

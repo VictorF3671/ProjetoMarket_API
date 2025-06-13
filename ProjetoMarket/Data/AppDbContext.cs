@@ -14,5 +14,7 @@ namespace ProjetoMarket.Data
         public DbSet<ProjetoMarket.Models.Login> Login { get; set; } = default!;
         public DbSet<ProjetoMarket.Models.Products> Products { get; set; } = default!;
         public DbSet<ProjetoMarket.Models.Sale> Sale { get; set; } = default!;
+
+        public DbSet<ProjetoMarket.Models.SaleItem> SaleItem { get; set; } = default!;
     }
 }

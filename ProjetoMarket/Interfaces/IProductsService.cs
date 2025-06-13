@@ -1,4 +1,5 @@
 ﻿using ProjetoMarket.Models;
+using System.Security.Claims;
 
 namespace ProjetoMarket.Interfaces
 {

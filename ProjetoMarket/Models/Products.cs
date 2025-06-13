@@ -19,11 +19,7 @@ namespace ProjetoMarket.Models
 
         public required int Stock { get; set; } = 0; // Default stock is 0
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [ForeignKey(nameof(User))]
-        public int IdUser { get; set; }
-
-        public User User { get; set; } = null!;
     }
 }
