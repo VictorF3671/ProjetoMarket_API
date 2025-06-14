@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "ProjetoMarket.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "ProjetoMarket.Models.Login",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjetoMarket.Controllers.ProductsController",
     "Method": "CreateProduct",
     "RelativePath": "api/Products",
@@ -118,21 +134,5 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "ProjetoMarket.Controllers.LoginController",
-    "Method": "Login",
-    "RelativePath": "auth/Login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "login",
-        "Type": "ProjetoMarket.Models.Login",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   }
 ]

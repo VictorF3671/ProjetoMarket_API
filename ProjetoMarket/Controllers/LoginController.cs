@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace ProjetoMarket.Controllers
 {
     [ApiController]
-    [Route("auth/[controller]")]
+    [Route("api/auth/[controller]")]
     public class LoginController : Controller
     {
         private readonly AppDbContext _context;
