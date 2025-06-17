@@ -31,6 +31,7 @@ namespace ProjetoMarket.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+
             var user = new User
             {
                 Name = userDto.Name,
@@ -41,12 +42,13 @@ namespace ProjetoMarket.Controllers
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            return Ok(new {success = true});
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetUsers()
         {
+
             
             var usuarios = await _context.Users
                 .Select(u => new UserDto
@@ -55,8 +57,14 @@ namespace ProjetoMarket.Controllers
                     Name = u.Name,
                     Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
-                    Group = u.Group,
+                    Group = u.Group == 1
+                        ? "Vendedor"
+                        : u.Group == 2
+                            ? "Administrador"
+                            : "Desconhecido",
                 }).ToListAsync();
+
+            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(usuarios));
 
             return usuarios;
         }
